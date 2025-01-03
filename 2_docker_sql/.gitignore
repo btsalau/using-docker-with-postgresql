@@ -4,3 +4,4 @@
 yellow_tripdata_2019-01.csv
 output.csv
 ny_taxi_postgres_data
+.DS_Store
