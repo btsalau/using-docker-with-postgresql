@@ -19,9 +19,11 @@ RUN apt-get update \
 # Copy requirements.txt and install dependencies
 COPY requirements.txt /requirements.txt
 
+USER airflow
 RUN pip install --no-cache-dir pandas && pip install --no-cache-dir -r /requirements.txt
 
 # Copy DAGs if you want to embed them in the image
+USER root
 COPY ./dags /opt/airflow/dags
 
 # Optional: Copy custom scripts or configurations
