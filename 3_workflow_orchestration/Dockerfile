@@ -13,11 +13,9 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \ 
         wget \
         vim \
-        # Add any other apt packages you need
     && apt-get clean \ 
     && rm -rf /var/lib/apt/lists/* 
 
-# Install additional Python packages individually
 # Copy requirements.txt and install dependencies
 COPY requirements.txt /requirements.txt
 
