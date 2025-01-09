@@ -1,5 +1,5 @@
 # Use official Airflow image as base
-FROM apache/airflow:2.2.3
+FROM apache/airflow:2.10.4
 
 ENV AIRFLOW_HOME=/opt/airflow
 
@@ -27,7 +27,6 @@ RUN pip install --no-cache-dir pandas && pip install --no-cache-dir -r /requirem
 COPY ./dags /opt/airflow/dags
 
 # Optional: Copy custom scripts or configurations
-COPY ./scripts /opt/airflow/scripts
 COPY ./config /opt/airflow/config
 
 WORKDIR $AIRFLOW_HOME
