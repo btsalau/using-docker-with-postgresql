@@ -14,25 +14,21 @@ RUN apt-get update \
         wget \
         vim \
     && apt-get clean \ 
-    && rm -rf /var/lib/apt/lists/* 
+    && rm -rf /var/lib/apt/lists/* \
+    && mkdir -p /opt/airflow/downloads \
+    && chown -R airflow:root /opt/airflow/downloads \
+    && chmod -R 775 /opt/airflow/downloads
 
-# Copy requirements.txt and install dependencies
+# Copy requirements.txt
 COPY requirements.txt /requirements.txt
 
+# Install Python dependencies as airflow user
 USER airflow
-RUN pip install --no-cache-dir pandas && pip install --no-cache-dir -r /requirements.txt
+RUN pip install --no-cache-dir pandas
+RUN pip install --no-cache-dir -r /requirements.txt
 
-# Copy DAGs if you want to embed them in the image
-USER root
+# Copy DAGs and configs
 COPY ./dags /opt/airflow/dags
-
-# Optional: Copy custom scripts or configurations
 COPY ./config /opt/airflow/config
 
 WORKDIR $AIRFLOW_HOME
-
-# Switch back to airflow user for security
-USER airflow
-
-# Set any additional environment variables if needed
-ENV PYTHONPATH=/opt/airflow
