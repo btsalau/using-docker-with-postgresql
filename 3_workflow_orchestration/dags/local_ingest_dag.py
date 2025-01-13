@@ -1,11 +1,14 @@
-""" testing local ingestion with airflow"""
+""" Defining the URL
+URL_TEMPLATE = "https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow"
+version_date = datetime.now().strftime("%Y-%m")
+FULL_URL = URL_TEMPLATE + '/yellow_tripdata_' + version_date + '.csv.gz'
+"""
 
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
 
 from airflow import DAG
 from airflow.operators.bash import BashOperator
-from airflow.operators.python import PythonOperator
 
 # Load environment variables at the beginning of the script
 load_dotenv()
@@ -16,8 +19,10 @@ load_dotenv()
 
 # print(db_engine, user, password, host, port, db_name)
 
-url = "https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/yellow_tripdata_2019-01.csv.gz"
-directory = "/opt/airflow/downloads/output.csv"
+
+URL = "https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/yellow_tripdata_2019-01.csv.gz"
+
+DIRECTORY = "/opt/airflow/downloads/output.csv"
 
 default_args = {
     "owner": "airflow",
@@ -37,7 +42,7 @@ dag_args = {**COMMON_ARGS, "default_args": default_args}
 
 with DAG(**dag_args) as dag:
     task1 = BashOperator(
-        task_id="wget", bash_command=f"wget -O - {url} | gunzip > {directory}"
+        task_id="wget", bash_command=f"wget -O - {URL} | gunzip > {DIRECTORY}"
     )
 
     task2 = BashOperator(task_id="files", bash_command="ls /opt/airflow/downloads")
