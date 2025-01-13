@@ -11,7 +11,10 @@ from airflow.operators.python import PythonOperator
 load_dotenv()
 
 # Access environment variables
+# engine = create_engine(f"{db_engine}://{user}:{password}@{host}:{port}/{db_name}")
+# db_engine, user, password, host, port, db_name = os.getenv("DB_ENGINE"), os.getenv("DB_USER"), os.getenv("DB_PASSWORD"), os.getenv("DB_HOST"), os.getenv("DB_PORT"), os.getenv("DB_NAME")
 
+# print(db_engine, user, password, host, port, db_name)
 
 url = "https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/yellow_tripdata_2019-01.csv.gz"
 directory = "/opt/airflow/downloads/output.csv"
