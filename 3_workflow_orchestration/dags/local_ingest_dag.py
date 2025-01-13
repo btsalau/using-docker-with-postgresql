@@ -1,10 +1,17 @@
 """ testing local ingestion with airflow"""
 
 from datetime import datetime, timedelta
+from dotenv import load_dotenv
 
 from airflow import DAG
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
+
+# Load environment variables at the beginning of the script
+load_dotenv()
+
+# Access environment variables
+
 
 url = "https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/yellow_tripdata_2019-01.csv.gz"
 directory = "/opt/airflow/downloads/output.csv"
