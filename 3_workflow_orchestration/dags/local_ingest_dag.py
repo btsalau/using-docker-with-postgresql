@@ -14,8 +14,15 @@ from airflow.operators.python import PythonOperator
 from sqlalchemy import create_engine
 
 
-def test_connection(DB_ENGINE, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME):
-
+def test_connection(
+    DB_ENGINE: str,
+    DB_USER: str,
+    DB_PASSWORD: str,
+    DB_HOST: str,
+    DB_PORT: str,
+    DB_NAME: str,
+) -> str:
+    """Test connection to the app Postgres database"""
     try:
         engine = create_engine(
             f"{DB_ENGINE}://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
